@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .box{
+      width:400px;
+      height:100px;
+      position:relative;
+      margin:100px auto;
+      background:lightblue;
+    }
+    .yuan{
+      position:absolute;
+      right:60px;
+      bottom:20px;
+      background:yellow;
+      width:10px;
+      height:10px;
+      border-radius:5px;
+      animation:run 3s linear infinite;
+    }
+    @keyframes run{
+      10%{
+          right:120px;
+          bottom:80px;
+      }
+      30%{
+          right:170px;
+          bottom:30px;
+      }
+      40%{
+        right:200px;
+        bottom:50px;
+      }
+      50%{
+        right:240px;
+        bottom:20px;
+      }
+      55%{
+        right:230px;
+        bottom:20px;
+      }
+      60%{
+        right:200px;
+        bottom:20px;
+      }
+      65%{
+        right:180px;
+        bottom:20px;
+      }
+      70%{
+        right:160px;
+        bottom:20px;
+      }
+      75%{
+        right:155px;
+        bottom:20px;
+      }
+      80%{
+        right:145px;
+        bottom:20px;
+      }
+      85%{
+        right:140px;
+        bottom:20px;
+      }
+      90%{
+        right:135px;
+        bottom:20px;
+      }
+      95%{
+        right:128px;
+        bottom:20px;
+      }
+      100%{
+        right:120px;
+        bottom:20px;
+      }
+
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <span class="yuan"></span>
+  </div>
+</body>
+</html>
