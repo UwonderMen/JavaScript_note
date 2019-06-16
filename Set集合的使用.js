@@ -89,3 +89,70 @@ Map实例的方法和属性：
   map.size   //获取map中的键值对个数
   map.values()  //获取到map中的所有值
   map.set(key,value)  //设置一个键值存储在map中
+
+
+
+
+/*
+  Symbol这个也是一个基本数据类型
+
+  只要是通过l执行Symbo函数后，返回的值是一个唯一的值
+
+  Symbol函数创建一个唯一值时支持传递一个参数，只是为了人性化的作为区分这两个值不同，但其实只要
+  使用Symbol函数创建唯一值，就是不同的两个值
+  注意：
+    1、不能使用new，他不是一个类
+    2、Symbol也有toString()方法
+    3、Symbol不能直接与字符串相加，但是symbol可以调用toString()方法
+    4、Symbol可以转bool
+      例如 let sy = Symbol()
+          let k = sy?true:false
+*/
+
+// sy与sy1是两个不同的值
+let sy = Symbol()
+let sy1 = Symbol()
+console.log(sy===sy1)  //false
+  注意：
+    1、如果一个对象中包含了Symbol函数创建的一个属性名，那么使用for...in..是无法获取到这个属性名的
+只能使用Object.getOwnPropertySymbols()方法获取，这个方法返回一个数组
+    2、这个Object.getOwnPropertySymbols()方法只返回Symbol函数声明的属性名
+
+Symbol的方法
+  Symbol.for(key)  //使用给定的key搜索现有的symbol，如果找到则返回该symbol。
+                  //否则将使用给定的key在全局symbol注册表中创建一个新的symbol
+
+
+本身具备iterator接口的数据结构有哪些：
+  Array
+  Map
+  Set
+  String
+  TypeArray
+  函数arguments对象
+  NodeList对象
+
+
+实现一个迭代器
+let myiterator = function(){
+  let arr = [1,2,3,4]
+  let index = 0;
+  let flag = true;
+  let item = 0;
+  return {
+      next(){
+        try {
+          item = arr[index++]
+          flag = true;
+        } catch (e) {
+            item = "";
+            flag = false;
+        } finally {
+          return {
+            value:item,
+            done:flag
+          }
+        }
+      }
+    }
+  }
