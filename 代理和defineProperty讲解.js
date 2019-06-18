@@ -74,3 +74,14 @@ Object.defineProperty(对象，属性，描述符)
   }
   //查看属性的描述符信息
   console.log(Object.getOwnPropertyDescriptor(obj,"name"))
+
+定义对象描述符的复数方法:
+  Object.defineProperties(data,{
+    属性1:{
+
+    },
+    属性2:{
+
+    },
+    .......
+  })

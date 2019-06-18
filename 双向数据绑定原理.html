@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="box">
+    <input type="text" name="" v-model="name">
+    <input type="text" name="" v-model="age">
+    <p>{{name}}</p>
+    <p>{{age}}</p>
+  </div>
+</body>
+<script>
+  let data = {name:"张三",age:12};
+  let app = document.getElementById('box');
+  let inputs = document.getElementsByTagName("input");
+  let nodeList = [...app.children].filter(item=>{return item.nodeName.toLowerCase()!= "input"})
+  let cloneList = nodeList.map(item=>item.cloneNode(true))
+
+
+  for(let i=0; i<inputs.length;i++){
+    if(inputs[i].getAttribute("v-model")){
+      inputs[i].value = data[inputs[i].getAttribute("v-model")]
+    }
+  }
+  for(let i=0;i<nodeList.length;i++){
+    console.log(nodeList[i])
+    let text = nodeList[i].innerHTML
+    nodeList[i].innerHTML  = text.replace(/\{\{(.*)\}\}/,()=>data[arguments[1]])
+  }
+
+
+  Object.defineProperties(data,{
+    name:{
+      set(val){
+        for(let i=0; i<inputs.length;i++){
+          if(inputs[i].getAttribute("v-model")=="name"){
+            inputs[i].value = val
+          }
+          (function(i){
+            inputs[i].oninput=function(){
+              data[inputs[i].getAttribute("v-model")] = this.value
+            }
+          })(i)
+        };
+        nodeList.forEach((item,index)=>{
+          nodeList[index].innerHTML = item.innerHTML.replace(/\{\{name}}/g,()=>val)
+        })
+
+      },
+      get(){
+
+      }
+    },
+    age:{
+      set(val){
+
+      }
+    }
+  })
+
+
+</script>
+</html>
