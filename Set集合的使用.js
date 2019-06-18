@@ -156,3 +156,13 @@ let myiterator = function(){
       }
     }
   }
+
+
+调用iterator接口的场合
+  解构赋值
+  扩展运算符
+  Set Map
+  for...of
+  Array.from()
+  Promise.all()
+  Promise.race()
