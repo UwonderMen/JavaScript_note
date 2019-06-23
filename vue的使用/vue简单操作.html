@@ -8,6 +8,14 @@
   <script type="text/javascript" src="https://cdn.bootcss.com/vue/2.6.10/vue.js">
 
   </script>
+  <style>
+    .back{
+      background:green
+    }
+    .r{
+      background:red
+    }
+  </style>
 </head>
 <body>
   <div id="app">
@@ -55,27 +63,127 @@
     <ul>
       <li v-for="(val,key) in obj">{{key}}:{{val}}</li>
     </ul>
+
+    <hr>
+    <!-- v-bind指令用来动态绑定属性 -->
+    <div v-bind:class="cls" style="height:50px;width:50px"></div>
+    <button @click="fn">改变</button>
+    <input type="text" v-for="item in goods" :value="item">
+
+    <hr>
+    <!-- 过滤器：就是处理管道前面的值。过滤器是一个函数。当然，过滤器是一个函数，也可传递参数，但是
+    默认会将过滤的值当成第一个参数传递进去
+    语法：
+        值|过滤器
+
+    过滤器分类：
+      全局过滤器：
+        定义：
+          Vue.filter(过滤器名(过滤器函数名),函数体)
+      局部过滤器
+        定义：
+        filters:{
+          过滤器名(val,num){
+            函数体
+          }
+        } -->
+
+    <span>{{0.79998001|convert(3)}}</span>
+    <hr>
+    <ul>
+      <li v-for="item in test">{{item}}</li>
+    </ul>
+
+    <hr>
+
+    <!-- 计算属性：
+      computed:{
+        属性:{
+          get(){
+            //获取计算属性时触发
+          },
+          set(){
+            //设置计算属性时触发
+          }
+        }
+      }
+    注意：在计算属性中定义了的属性不能在data对象中重复出现，否则报错.
+    注意：计算属性只要依赖（所依赖的值必须要有setter或者getter属性，什么时候有
+    setter和getter属性呢？即在data属性中这个变量有初始化设置）的值发生改变，那么就会触发重新计算
+
+    注意：计算属性可以没有setter属性，但是必须要有getter属性，什么时候既有setter属性又有
+    setter属性呢？即使用v-model绑定时
+
+
+    如果计算属性只有getter属性，那么可以简写为：属性(){}
+
+      例如：
+          num:{
+          getter(){
+
+        }
+        }
+
+        简写为：
+          num(){
+
+        }
+    -->
+      计算属性：{{isall}}
+      <hr>
+
+      v-show和v-if使用
+      <div style="height:60px;width:80px;background:red" v-show="0"></div>
+      <span>asdas </span>
+      v-show操作的是样式，即控制元素的display属性是none还是block
+      v-if操作的是元素直接控制是否将元素remove掉了
+
   </div>
 </body>
 <script type="text/javascript">
+    // 全局过滤器
+    // Vue.filter("toFixed",(item,param) => {return item.toFixed(params)})
     var vm = new Vue({
       el:"#app",
       data:{
         name:"zhangsan",
         ischecked:false,
         arr:[],
-        mul:"",
+        mul:[],
         goods:["apple","pear","orange"],
-        obj:{name:"zhangsna",age:12,hobby:"play baseketboll"}
+        obj:{name:"zhangsna",age:12,hobby:"play baseketboll"},
+        test:{a:{h:[1,2,3]},d:"hh"},
+        cls:"back",
+        k:[1,2,2,3,]
       },
       computed:{
         checked(){
           return this.ischecked
+        },
+        isall:{
+          get(){
+            console.log(123)
+          },
+          set(){
+
+          }
         }
       },
       methods:{
+        dochange(){
+          this.k.splice(1,1)
+        },
         change(){
 
+        },
+        fn(){
+          this.cls = "r"
+        }
+      },
+      // 定义局部过滤器
+      filters:{
+        convert(val,num){
+          return val.toFixed(num)
         }
       }
     })
