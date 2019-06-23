@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script type="text/javascript" src="https://cdn.bootcss.com/vue/2.6.10/vue.js">
+
+  </script>
+</head>
+<body>
+  <div id="app">
+    <span>{{name}}</span><br>
+    <!-- checkbox只要定义了v-model指令，那么checkbox属性上的checked属性不管用 -->
+    input:<input type="checkbox" checked v-model="ischecked"><br>
+    input值:{{checked}}
+    <hr>
+
+    <!-- 如果input是一个多选框，且有多个，每个多选框的v-mdel属性值都是同一个变量，且
+    这个变量是一个数组，那么当选中checkbox时，会将checkbox的值加入到数组变量中，如果没
+    有value就加入null -->
+    <input type="checkbox" value="1" v-model="arr">
+    <input type="checkbox" value="2" v-model="arr">
+    <input type="checkbox" value="3" v-model="arr">
+    <input type="checkbox" v-model="arr">
+    <div>
+      <p>arr值</p>
+      <ul>
+        <li v-for="(item,index) in arr">{{item}}-{{index}}</li>
+      </ul>
+    </div>
+    {{arr}}
+
+    <hr>
+    下拉框中的多选和单选:
+    <!-- 如果v-model绑定在下拉框中时，如果option没有value值，那么取的就是option的
+    innerText值 。同时，如果下拉框是多选，那么会将选中的内容加入到v-model绑定的变量中
+    同时，如果下拉框是多选，同时绑定到下拉框的变量的值不是一个数组，那么会强行将这个
+    值变成一个数组-->
+    <select v-model="mul" multiple>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option>3</option>
+    </select>
+    下拉框值:{{mul}}
+
+    <hr>
+    <!-- v-for指令循环一个数组元素时，一般都是加到要被循环的元素身上 -->
+    <ul>
+      <li v-for="item in goods">{{item}}</li>
+    </ul>
+    <hr>
+    <!-- v-for也可以循环一个对象的所有属性，循环的值第一个是属性值，第二个是属性名 -->
+    <ul>
+      <li v-for="(val,key) in obj">{{key}}:{{val}}</li>
+    </ul>
+  </div>
+</body>
+<script type="text/javascript">
+    var vm = new Vue({
+      el:"#app",
+      data:{
+        name:"zhangsan",
+        ischecked:false,
+        arr:[],
+        mul:"",
+        goods:["apple","pear","orange"],
+        obj:{name:"zhangsna",age:12,hobby:"play baseketboll"}
+      },
+      computed:{
+        checked(){
+          return this.ischecked
+        }
+      },
+      methods:{
+        change(){
+
+        }
+      }
+    })
+</script>
+</html>
