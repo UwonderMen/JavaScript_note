@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <li v-for="item in arr">{{item}}</li>
+    </ul>
+    <input type="text" @keyup.enter="add" v-model="num">
+
+    {{n}}
+  </div>
+</body>
+<script>
+  var vm = new Vue({
+    el:"#app",
+    data:{
+      arr:[1,2,3],
+      num:""
+    },
+    methods:{
+      add(){
+        this.arr[1] = 100
+      }
+    },
+    computed:{
+      n(){
+          console.log(123)
+          return this.arr[1]
+      }
+    }
+  })
+</script>
+</html>
