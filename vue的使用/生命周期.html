@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+  </div>
+
+
+  vue生命周期：
+    1、beforeCreate钩子函数:是数据初始化（即data对象中的属性初始化）之前，
+    在这里获取不到data中的数据，更别说渲染视图了
+
+    2、created钩子函数:数据初始化完成（即data对象中的属性已经初始化完成），但是还是没有渲染视图
+        注意：beforeCreate钩子函数先于created钩子函数执行
+        一般在这个钩子函数中做一些数据请求等操作
+
+    3、beforeMount钩子函数：将视图挂在到页面之前触发，挂载之前会判断模板是否正确
+
+    4、mounted钩子函数：视图挂在到页面之后触发，这个时候视图已被渲染或者视图已经挂在好了
+        注意：这个钩子可以获取已经渲染好的DOM元素，一般会在这个钩子函数中绑定事件，但是
+        如果在mounted钩子函数中更改了数据，即可能触发视图的重新渲染，即可能我们又想重新获取更改后的dom
+        元素，但是，在这个里边的dom渲染是异步的，此时如果直接获取，肯定不行，那么久的使用
+        this.$nextTick(()=>{}) 这个来获取，所以经常会在mounted函数中看到有this.$nextTick(()=>{})
+        。就是说如果要在mounted中操作dom元素，都需要用this.$nextTick(()=>{})包裹一下操作dom
+        
+
+
+    5、beforeUpdate钩子函数：当data中的数据变化后，更新视图之前触发
+
+    6、updated钩子函数：更新之后
+
+      注意：beforeUpdate和updated钩子函数几乎不咋使用，都一般使用watch来监听
+
+    7、beforeDestoryed钩子函数：销毁一个Vue实例之前触发
+
+    8、destroyed钩子函数：销毁之后（并没有真正的删除，只是不起作用了，渲染好的页面会被
+    保留）
+
+
+    <hr>
+      vue给想要获取的元素加一个属性ref="值"，那么在Vue中可以通过，this.$refs.值来获取到这个
+      dom元素
+      注意：
+        1、如果ref中的值有多个且相同了，那么只能获取一个，且后边的覆盖前边的
+        2、如果将ref设置在一个循环的元素上，那么，获取的this.$refs.值虽然值是相同的
+        但是，其实是得到一个数组，包含循环产生的每个元素
+
+      <div class="box" ref="box"></div>
+
+      <!-- 在vue中可以通过下面这种方法获取dom元素
+        mounted(){
+        console.log(this.$refs.值)
+      }
+     -->
+
+
+</body>
+<script>
+  var vm = new Vue({
+    // 如果没有el这个属性，那么会查看vm.$mount()来挂在到视图上
+    el:"#app",
+    //如果Vue实施例中存在了template模板，那么直接将模板替换el作用的元素，template要优先于
+    //el中渲染，即template中的模板会覆盖el中的模板。同时template模板必须被一个根元素包括
+    template:"<h1>哈哈哈</h1>",
+    data:{
+      arr:[1,2,3],
+      num:"123"
+    },
+    beforeCreate(){
+      console.log(this.num)
+    },
+    created(){
+      console.log(this.num)
+    }
+
+  })
+</script>
+</html>

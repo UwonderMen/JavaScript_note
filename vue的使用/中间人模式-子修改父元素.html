@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+      父组件的num值：{{num}}
+      <child :m="num"></child>
+  </div>
+  <template id="child">
+    <div>
+      <div class="box">子组件的num值：{{m}}</div>
+      <button @click="change">改变</button>
+    </div>
+  </template>
+</body>
+<script>
+  var middlePerson = new Vue()
+  var vm = new Vue({
+    el:"#app",
+    data:{
+      num:"123"
+    },
+    components:{
+      child:{
+        template:"#child",
+        props:['m'],
+        methods:{
+          change(){
+            middlePerson.$emit("change",12)
+          }
+        }
+      }
+    }
+  })
+  middlePerson.$on("change",function(n){
+    vm.num = n
+  })
+
+</script>
+</html>
