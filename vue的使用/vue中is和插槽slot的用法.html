@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script type="text/javascript" src="https://cdn.bootcss.com/vue/2.6.10/vue.js">
+  </script>
+</head>
+<body>
+  <div id="app">
+
+  is的使用
+    Vue中提供了一个自定义标签，能够使用is属性指定一个组件后，就显示这个组件,
+    注意：这个组件名必须先在Vue中注册，否则报错
+          <Component is="com1"></Component>
+
+    is属性可以是动态的属性
+          <Component :is="component"></Component>
+          data:{
+            component:"com1",
+          },
+      但是，com1组件还是得注册
+
+    注意：Component自定义组件只能存放一个组件，组件之间的切换的时候就会有销毁，有生成
+    即会触发组件的生命周期函数（因为组件的创建和销毁极大的消耗性能，一般都不会销毁一个
+    组件。如果涉及到组件切换时都在这个组件外部包裹使用keey-alive自定义组件）
+        <keep-alive>
+          <Component :is="component"></Component>
+        </keep-alive>
+      当组件被切换时，组件不是被销毁而是被缓存了
+
+
+    slot的使用
+      <box>
+        <h1 slot="zhen">真的</h1>
+        <h2 slot="shi">是么</h2>
+        <h3 slot="ni">你好</h3>
+      </box>
+      let box= {
+        template:`
+            <div>
+              <h1>你好</h1>
+              <slot name="zhen"></slot>
+              <slot name="shi"></slot>
+              <slot name="ni"></slot>
+              <slot name="default"></slot>
+            </div>
+        `
+      }
+
+      如果在自定义组件内部使用一些标签，那么默认这些标签是不会显示的，如果需要显示
+      需要在组件的模板中使用slot插槽，插槽也可以定义名字，对应自定义组件内部的
+      slot属性对应的插槽
+
+      当自定义组件中的标签没有定义slot属性时，会自动进入自定义组件中slot标签没有
+      name属性的里边，或者自定义组件中的标签没有定义slot属性为defaut时，会自动进入自定义组件中slot标签没有
+      name属性的里边，但是<slot name="default"></slot>标签不能出现多次，只能一次，否则报错
+
+      注意：slot标签里边也可以有标签内容，如果没有name属性匹配到他，那么会默认显示
+      slot里边的内容
+        <box>
+          <h1 slot="zhen">真的</h1>
+          <h2 slot="shi">是么</h2>
+          <h3 slot="ni">你好</h3>
+        </box>
+        let box= {
+          template:`
+              <div>
+                <h1>你好</h1>
+                <slot name="zhen"></slot>
+                <slot name="shi"></slot>
+                <slot name="ni"></slot>
+                <slot name="hh">
+                  <div>
+                    我没有人匹配，我会显示出来，有匹配的就不会显示出来
+                  </div>
+                </slot>
+                <slot name="default"></slot>
+              </div>
+          `
+        }
+
+
+    <hr>
+    <Component :is="component"></Component>
+    <Component :is="component"></Component>
+    <br>
+    <button type="button" name="button" @click="change">改变</button>
+  </div>
+</body>
+<script type="text/javascript">
+  let com1= {
+    template:"<h1>你好</h1>"
+  }
+  let com2 = {
+    template:"<h2>你好啊</h2>"
+  }
+    new Vue({
+      el:"#app",
+      data:{
+        component:"com1",
+      },
+      components:{
+        com1,
+        com2
+      },
+      methods:{
+        change(){
+          this.component = "com2"
+        }
+      }
+    })
+</script>
+</html>
