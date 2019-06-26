@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script type="text/javascript" src="https://cdn.bootcss.com/vue/2.6.10/vue.js">
+  </script>
+  <script src="https://cdn.bootcss.com/vue-router/3.0.6/vue-router.js">
+
+  </script>
+</head>
+<body>
+  <div id="app">
+
+    vue中的路由：
+
+        vue中的路由分为两种：
+            哈希值：使用的是锚点（#）,默认使用的方式
+            history：直接将url变了，需要后台配合，并且一般用在上线的时候使用
+    vue-router使用三步骤
+      1、配置路由(路由映射表，即路径与组件的匹配)
+        let routes = [
+            {path:'/*',component:组件名},//匹配所有路径，注意如果写在列表第一位那么，后边无论路由挑去哪里都会显示这个统配路径的组件，一般这个放到最后，因为，匹配路径是遍历数组的
+            {path:'/',component:组件名},//配置首次打开渲染的组件
+            {path:'路径',component:组件名},
+            {path:'/*',redirect:"路径"},//这里也可以配置成如果找不到上面的路径就重定向到指定路径
+        ]
+
+        把映射表routes放入到路由对象router中作为初始化
+      2、注册路由
+          let router = new VueRouter({
+            mode:"history或者hash模式"  //选择路由的模式
+            routes
+          })  //出事化router对象
+          new Vue({
+            el:"#app",
+            data:{}，
+            router, //注入路由，初始化路由对象和注入路由后，会在页面的url地址后边出现"#/"
+          })
+      3、使用路由
+        <route-view></route-view>
+
+      4、定义路由链接
+        <router-link to="路径" tag="button">名称</router-link>
+
+        router-link组件默认渲染成a标签，to属性默认是一个锚点路径，当然tag属性可以
+        指定router-link组件渲染成什么标签
+
+        注意：看router-link组件渲染后的标签，在选后的router-link，Vue默认都为其添加
+        一个class，那么可以修改默认的选中的样式的class，修改方式如下:
+          let router = new VueRouter({
+            routes,
+            linkActiveClass:"active"  //这里的active是你定义好的css样式类active
+          })
+          .active{
+            color:red
+          }
+
+
+      编程式导航
+        当我们使用vue-router后，VueRouter对象为每个组件都增加了两个属性
+          $router：这个属性主要是存放一些操作路由的函数
+            push()方法：向路由中增加一个路由的路径(可以看到页面的导航有后退箭头)
+                this.$router.push("/list")
+            go()方法：跳转到指定的路径
+            replace()方法：替换当前的路由路径(不会增加一个路由路径)
+                  this.$router.replace("/list")
+
+          $route：这个主要是存放一些属性
+
+
+
+    子路由的配置
+    let routes = [
+        {
+          path:'/',
+        component:组件名,
+        children:[
+            {path:"路径",component:组件名}
+            {path:"路径",component:组件名} //注意：子路由的路径不用写/
+            .....
+        ]
+      }
+        {path:'路径',component:组件名},
+    ]
+
+    使用:
+  <router-link to="/父路径/子路径" tag="button">名称</router-link>
+
+
+  </div>
+</body>
+<script type="text/javascript">
+  let Home = {
+    tempalte:"<h1>Home</h1>"
+  }
+  new Vue({
+    el:"#app",
+    data:{
+    },
+    components:{
+      com1
+    },
+    methods:{
+      change(){
+        this.$refs.child.hide()
+        this.$refs.child.color = "green"
+      }
+    }
+  })
+</script>
+</html>

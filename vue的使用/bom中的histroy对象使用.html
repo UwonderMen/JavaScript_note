@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+  </div>
+</body>
+<script type="text/javascript">
+    console.log(history)
+
+    go(n)方法：表示前进，如果n大于n表示是前进n页，如果n是小于0，那么表示后退n页
+
+    back()方法：后退一页，相当于go(-1)
+
+    forward()方法：前进一页,相当于go(1)
+
+    pushState(data,title,url)方法：这个方法支持三个参数，并且url必须是同源下的url
+      ，否则报错，表示：在原来的历史记录中多加一条历史记录，多加的一条即这里的url。并且
+      url中的地址也会显示当前新加的url记录
+
+    replaceState(data,title,newUrl)方法：将当前的url替换newUrl
+
+
+    vue中利用了history改变历史不会刷新页面，来做路由
+      vue路由原理：根据url的改变但是不会刷新页面的这个技巧，来做路由
+
+
+</script>
+</html>

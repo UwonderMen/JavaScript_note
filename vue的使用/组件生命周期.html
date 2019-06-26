@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script type="text/javascript" src="https://cdn.bootcss.com/vue/2.6.10/vue.js">
+  </script>
+</head>
+<body>
+  <div id="app">
+
+
+    关于mounted生命周期钩子函数：表示渲染完成之后，进入mounted函数
+
+    父组件和子组件被挂在上去的执行生命周期流程
+
+    vm.beforeCreate ---> vm.created  ----> vm.beforeMount ----> 子组件.beforeCreate ----->
+
+    子组件.created------>子组件.mounted  ----->vm.mounted
+
+
+    子组件的数据改变不会触发父组件的更新操作生命周期
+
+    <hr>
+
+    {{msg}}
+    <hr>
+    <com1></com1>
+  </div>
+</body>
+<script type="text/javascript">
+  let com1= {
+    template:`
+        <div>
+          <hr />
+          <h1 v-show="flg">你好</h1>
+        </div>
+    `,
+    data(){
+      return {
+        flg:true,
+      }
+    },
+    methods:{
+      hide(){
+        this.flg = !this.flg
+      }
+    }
+  }
+  new Vue({
+    el:"#app",
+    data:{
+      msg:"我是父组件"
+    },
+    components:{com1}
+  })
+</script>
+</html>
