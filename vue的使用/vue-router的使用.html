@@ -64,11 +64,24 @@
           $router：这个属性主要是存放一些操作路由的函数
             push()方法：向路由中增加一个路由的路径(可以看到页面的导航有后退箭头)
                 this.$router.push("/list")
-            go()方法：跳转到指定的路径
+            go(n)方法：如果为负数，返回上n个组件，如果为正数前进n个组件
             replace()方法：替换当前的路由路径(不会增加一个路由路径)
                   this.$router.replace("/list")
 
-          $route：这个主要是存放一些属性
+          $route：这个主要是存放一些键值对，什么样的键值对呢？其实就是路由参数的键值对
+          let routes = [
+              {
+                path:'/',
+              component:组件名,
+              children:[
+                  {path:"路径/:id/:name",component:组件名}
+                  {path:"路径",component:组件名} //注意：子路由的路径不用写/
+                  .....
+              ]
+            }
+              {path:'路径',component:组件名},
+          ]
+          this.$route.params =>{id:值,name:值}
 
 
 
